@@ -416,23 +416,27 @@ class EPG(xbmcgui.WindowXML):
                 else:
                     if SERIE:
                         if _zattooDB_.getSeries(program['showID']):#Series record avilable
-                            ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(RECORD_SHOW), strings(RECORD_SERIES)])
+                            ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(PLAY_AND_CONTINUE), strings(RECORD_SHOW), strings(RECORD_SERIES)])
                             if ret==0:  #recall
                                 url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
-                            elif ret==1: #record
+                            elif ret==1:  #recall and continue
+                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end+36000)
+                            elif ret==2: #record
                                 #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
                                 setup_recording({'program_id': program['showID']})
                                 return
-                            elif ret==2: #record series
+                            elif ret==3: #record series
                                 #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
                                 setup_recording({'program_id': program['showID'], 'series': 'true'})
                                 return
                             else: return
                         else: 
-                            ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(RECORD_SHOW)])
+                            ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(PLAY_AND_CONTINUE), strings(RECORD_SHOW)])
                             if ret==0:  #recall
                                 url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
-                            elif ret==1: #record
+                            elif ret==1:  #recall and continue
+                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end+36000)
+                            elif ret==2: #record
                                 #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
                                 setup_recording({'program_id': program['showID']})
                                 return
@@ -446,7 +450,7 @@ class EPG(xbmcgui.WindowXML):
                 url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID']
             elif RECALL or RESTART:
                 if _zattooDB_.getSeries(program['showID']): #Series record avilable
-                    ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'), [strings(WATCH_CHANNEL), strings(PLAY_FROM_START), strings(RECORD_SHOW), strings(RECORD_SERIES)])
+                    ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'), [strings(WATCH_CHANNEL), strings(PLAY_FROM_START), strings(PLAY_AND_CONTINUE), strings(RECORD_SHOW), strings(RECORD_SERIES)])
                     if ret==0:  #watch live
                         url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID']
                     elif ret==1:  #recall
@@ -454,18 +458,22 @@ class EPG(xbmcgui.WindowXML):
                                 url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] +"&showID=" + program['showID'] + "&restart=true" + "&start=" + str(start) + "&end=" + str(end)
                         else:
                             url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
-                       
-                    elif ret==2: #record
+                    elif ret==2:  #recall and continue
+                        if RESTART:
+                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] +"&showID=" + program['showID'] + "&restart=true" + "&start=" + str(start) + "&end=" + str(end+36000)
+                        else:
+                            url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end+36000)   
+                    elif ret==3: #record
                         #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
                         setup_recording({'program_id': program['showID']})
                         return
-                    elif ret==3: #record series
+                    elif ret==4: #record series
                         #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
                         setup_recording({'program_id': program['showID'], 'series': 'true'})
                         return
                     else: return
                 else:
-                    ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'), [strings(WATCH_CHANNEL), strings(PLAY_FROM_START), strings(RECORD_SHOW)])
+                    ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'), [strings(WATCH_CHANNEL), strings(PLAY_FROM_START), strings(PLAY_AND_CONTINUE), strings(RECORD_SHOW)])
                     if ret==0:  #watch live
                         url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID']
                     elif ret==1:  #recall
@@ -473,7 +481,12 @@ class EPG(xbmcgui.WindowXML):
                                 url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] +"&showID=" + program['showID'] + "&restart=true" + "&start=" + str(start) + "&end=" + str(end)
                         else:
                             url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
-                    elif ret==2: #record
+                    elif ret==2:  #recall and continue
+                        if RESTART:
+                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] +"&showID=" + program['showID'] + "&restart=true" + "&start=" + str(start) + "&end=" + str(end+36000)
+                        else:
+                            url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end+36000)
+                    elif ret==3: #record
                         #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
                         setup_recording({'program_id': program['showID']})
                         return

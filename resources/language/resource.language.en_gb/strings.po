@@ -661,6 +661,10 @@ msgctxt "#31305"
 msgid "Record series"
 msgstr ""
 
+msgctxt "#31308"
+msgid "Play from start and continue"
+msgstr ""
+
 msgctxt "#31901"
 msgid "Content not accessible"
 msgstr ""

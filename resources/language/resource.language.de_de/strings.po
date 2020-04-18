@@ -650,6 +650,10 @@ msgctxt "#31307"
 msgid "skip to this position?"
 msgstr "starte von dieser Position?"
 
+msgctxt "#31308"
+msgid "Play from start and continue"
+msgstr "Von Anfang abspielen und weiterlaufen lassen"
+
 msgctxt "#31901"
 msgid "Content not accessible"
 msgstr "Inhalt nicht verfügbar"

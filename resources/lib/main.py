@@ -745,9 +745,10 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
     endTime = datetime.datetime.fromtimestamp(int(end))
     zStart = datetime.datetime.fromtimestamp(int(start) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ") #5min zattoo skips back
     zEnd = datetime.datetime.fromtimestamp(int(end) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")
-    #params = {'cid': channel_id, 'stream_type': stream_type, 'start':zStart, 'end':zEnd, 'maxrate':max_bandwidth }
-    params = {'stream_type': stream_type, 'maxrate':max_bandwidth, 'enable_eac3':DOLBY}
-    resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/recall/' + channel_id + '/' + showID, params)
+    params = {'cid': channel_id, 'stream_type': stream_type, 'start':zStart, 'end':zEnd, 'maxrate':max_bandwidth }
+    #params = {'stream_type': stream_type, 'maxrate':max_bandwidth, 'enable_eac3':DOLBY}
+    #resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/recall/' + channel_id + '/' + showID, params)
+    resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
     
   channelInfo = _zattooDB_.get_channelInfo(channel_id)
 
