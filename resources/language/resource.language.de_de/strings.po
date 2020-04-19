@@ -458,6 +458,10 @@ msgctxt "#31012"
 msgid "always play show in EPG"
 msgstr "im EPG immer abspielen"
 
+msgctxt "#31024"
+msgid "EPG continue time in hours"
+msgstr "EPG weiterlaufen Zeit in Stunden"
+
 msgctxt "#31013"
 msgid "select folder for library"
 msgstr "Verzeichnis für Bibliothek auswählen"

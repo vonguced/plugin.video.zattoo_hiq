@@ -110,7 +110,10 @@ CHANNELS_PER_PAGE = 8
 
 HALF_HOUR = datetime.timedelta(minutes=30)
 
-
+try:
+    CONTINUE_TIME = int(__addon__.getSetting('play_and_continue_time'))*60*60
+except:
+    CONTINUE_TIME = 6*60*60
 
 if __addon__.getSetting('country') == 'CH': SWISS = 'true'
 else: SWISS = 'false'
@@ -420,7 +423,7 @@ class EPG(xbmcgui.WindowXML):
                             if ret==0:  #recall
                                 url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
                             elif ret==1:  #recall and continue
-                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end+36000)
+                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end+CONTINUE_TIME)
                             elif ret==2: #record
                                 #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
                                 setup_recording({'program_id': program['showID']})
@@ -435,7 +438,7 @@ class EPG(xbmcgui.WindowXML):
                             if ret==0:  #recall
                                 url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
                             elif ret==1:  #recall and continue
-                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end+36000)
+                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end+CONTINUE_TIME)
                             elif ret==2: #record
                                 #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
                                 setup_recording({'program_id': program['showID']})
@@ -460,9 +463,9 @@ class EPG(xbmcgui.WindowXML):
                             url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
                     elif ret==2:  #recall and continue
                         if RESTART:
-                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] +"&showID=" + program['showID'] + "&restart=true" + "&start=" + str(start) + "&end=" + str(end+36000)
+                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] +"&showID=" + program['showID'] + "&restart=true" + "&start=" + str(start) + "&end=" + str(end+CONTINUE_TIME)
                         else:
-                            url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end+36000)   
+                            url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end+CONTINUE_TIME)   
                     elif ret==3: #record
                         #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
                         setup_recording({'program_id': program['showID']})
@@ -483,9 +486,9 @@ class EPG(xbmcgui.WindowXML):
                             url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
                     elif ret==2:  #recall and continue
                         if RESTART:
-                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] +"&showID=" + program['showID'] + "&restart=true" + "&start=" + str(start) + "&end=" + str(end+36000)
+                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] +"&showID=" + program['showID'] + "&restart=true" + "&start=" + str(start) + "&end=" + str(end+CONTINUE_TIME)
                         else:
-                            url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end+36000)
+                            url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end+CONTINUE_TIME)
                     elif ret==3: #record
                         #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
                         setup_recording({'program_id': program['showID']})
