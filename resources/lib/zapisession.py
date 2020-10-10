@@ -148,21 +148,23 @@ class ZapiSession:
             resultData = json.loads(content)
             return resultData
 
-
         except Exception:
             pass
         return None
+#def fetch_appToken(self):
+# #debug("ZapiUrL= "+str(self.ZAPIUrl))
+# try:
+	# handle = urllib2.urlopen(self.ZAPIUrl + '/int/')
+# except:
+	# handle = urllib.urlopen(self.ZAPIUrl + '/int/')
+# html = handle.read()
+# return re.search("window\.appToken\s*=\s*'(.*)'", html).group(1)
 
     def fetch_appToken(self):
-        #debug("ZapiUrL= "+str(self.ZAPIUrl))
-        try:
-            handle = urllib2.urlopen(self.ZAPIUrl + '/int/')
-        except:
-            handle = urllib.urlopen(self.ZAPIUrl + '/int/')
-        html = handle.read()
-        return re.search("window\.appToken\s*=\s*'(.*)'", html).group(1)
-
-
+		handle = urllib2.urlopen(self.ZAPIUrl + '/token-46a1dfccbd4c3bdaf6182fea8f8aea3f.json?id=ZvOj-NPFWKOPEAg57jBkU')
+		htmlJson = json.loads(handle.read())						
+		return htmlJson['session_token']
+        
     def session(self):
         api = '/zapi/session/hello'
         params = {"client_app_token" : self.fetch_appToken(),
